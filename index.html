@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generador de correos y contraseñas</title>
+</head>
+<body>
+    <h1>Generador de correos y contraseñas</h1>
+    <form id="formulario">
+        <label for="nombre">Nombre completo:</label>
+        <input type="text" id="nombre" name="nombre"><br><br>
+        <label for="apellido">Apellido completo:</label>
+        <input type="text" id="apellido" name="apellido"><br><br>
+        <label for="fechaNacimiento">Fecha de nacimiento:</label>
+        <input type="date" id="fechaNacimiento" name="fechaNacimiento"><br><br>
+        <button type="button" onclick="generarCorreoYContrasena()">Generar</button>
+    </form>
+    <p id="resultado"></p>
+
+    <script>
+        function generarCorreoYContrasena() {
+            const nombre = document.getElementById('nombre').value.toLowerCase();
+            const apellido = document.getElementById('apellido').value.toLowerCase();
+            const fechaNacimiento = document.getElementById('fechaNacimiento').value
+            if (!fechaNacimiento) {
+                alert("Por favor, ingresa una fecha de nacimiento.");
+                return;
+            }
+            const inicialesNombre = nombre.split(' ').map(nombre => nombre[0]).join('');
+            const inicialesApellido = apellido.split(' ').map(apellido => apellido[0]).join('');
+
+            const añoNacimiento = fechaNacimiento.split('-')[2];
+            
+            const correo = `${inicialesNombre}${inicialesApellido}${añoNacimiento}@gmail.com`;
+
+            const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()';
+            let contraseña = '';
+            for (let i = 0; i < 12; i++) {
+                const indiceAleatorio = Math.floor(Math.random() * caracteres.length);
+                contraseña += caracteres.charAt(indiceAleatorio);
+            }
+
+            const resultado = document.getElementById('resultado');
+            resultado.textContent = `Correo electrónico: ${correo}\nContraseña: ${contraseña}`;
+        }
+    </script>
+</body>
+</html>
